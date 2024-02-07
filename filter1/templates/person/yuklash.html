@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malumotni Excelga yuklash</title>
+</head>
+<body>
+
+<h1>Malumotni Excelga yuklash</h1>
+
+<form id="dataForm">
+    <label for="name">Ismingiz:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="age">Yoshingiz:</label>
+    <input type="number" id="age" name="age" required>
+
+    <button type="button" onclick="saveToExcel()">Saqlash</button>
+</form>
+
+<script>
+    function saveToExcel() {
+        // Foydalanuvchidan ism va yoshni olish
+        var name = document.getElementById('name').value;
+        var age = document.getElementById('age').value;
+
+        // Malumotlarni Excel fayliga yozish uchun qayta ishlash
+        var csvContent = "data:text/csv;charset=utf-8,";
+
+        // Malumotlarni CSV formatida yozish
+        var dataString = name + "," + age;
+        csvContent += dataString + "\n";
+
+        // Faylni yaratish va yuklash
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "foydalanuvchilar.csv");
+        document.body.appendChild(link);
+
+        // Faylni avtomatik yuklash
+        link.click();
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredPackages">
+        <value>
+          <list size="0" />
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E501" />
+          <option value="W292" />
+          <option value="E231" />
+          <option value="E302" />
+          <option value="E225" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N801" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyShadowingBuiltinsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredNames">
+        <list>
+          <option value="input" />
+          <option value="id" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="main.*" />
+          <option value="bot.*" />
+          <option value="orm_app.models.Countries.*" />
+          <option value="orm_app.models.Employees.*" />
+          <option value="orm_app.views.union" />
+          <option value="orm_app.models.Jobs.*" />
+          <option value="orm_app.models.Dependents.*" />
+          <option value="django.conf.Settings.*" />
+          <option value="blog.models.Students.*" />
+          <option value="blog.models.Book.*" />
+          <option value="blog.views.*" />
+          <option value="news.models.*" />
+          <option value="blog.models.Faculty.*" />
+          <option value="blog.models.Direction.*" />
+          <option value="blog.models.Application.*" />
+          <option value="orm_app.models.Departments.*" />
+          <option value="orm_app.models.Locations.*" />
+          <option value="orm_app.models.Regions.*" />
+          <option value="django.db.models.fields.DateTimeField.*" />
+          <option value="adminapp.models.Faculty.*" />
+          <option value="adminapp.models.Kafedra.*" />
+          <option value="adminapp.models.Subject.*" />
+          <option value="adminapp.models.Teacher.*" />
+          <option value="adminapp.models.Group.*" />
+          <option value="adminapp.models.Student.*" />
+          <option value="userfood.models.Category.*" />
+          <option value="userfood.models.Product.*" />
+          <option value="userfood.models.Customer.*" />
+          <option value="userfood.models.Order.*" />
+          <option value="django.forms.*" />
+          <option value="food.models.Category.*" />
+          <option value="food.models.Product.*" />
+          <option value="food.models.Customer.*" />
+          <option value="food.models.Order.*" />
+          <option value="user.models.Bedroom.*" />
+          <option value="user.models.Rooms.*" />
+          <option value="myapi.models.Review.*" />
+          <option value="myapi.models.Category.*" />
+          <option value="myapi.models.Product.*" />
+          <option value="user.models.Users.*" />
+          <option value="user.models.UserProfile.*" />
+          <option value="django.conf.urls.*" />
+          <option value="accounts.models.Profile.*" />
+          <option value="django.db.models.fields.files.ImageField.*" />
+          <option value="users.models.Profile.*" />
+          <option value="users.models.Username.*" />
+          <option value="application.models.Hemis_admin.*" />
+          <option value="application.models.Moodle_admin.*" />
+          <option value="application.models.KeroControl_admin.objects" />
+          <option value="application.models.Username.*" />
+          <option value="application.models.Profile.*" />
+          <option value="django.db.models.fields.related.OneToOneField.*" />
+          <option value="users.models.Application.*" />
+          <option value="users.models.Position.*" />
+          <option value="users.models.System.*" />
+          <option value="users.models.Student.*" />
+          <option value="kutubxona.models.Kitobturi.*" />
+          <option value="kutubxona.models.Kitob.*" />
+          <option value="kutubxona.models.Talaba.*" />
+          <option value="kutubxona.models.Ariza.*" />
+          <option value="ecommerse.models.Order.*" />
+          <option value="ecommerse.models.Product.*" />
+          <option value="django.db.models.fields.related.ForeignKey.*" />
+          <option value="contact.models.Application.*" />
+          <option value="contact.models.HujumTuri.*" />
+          <option value="contact.models.Tuman.*" />
+          <option value="dashboard.models.Profile.*" />
+          <option value="dashboard.models.AdminProfile.*" />
+          <option value="captcha.fields.ReCaptchaField" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

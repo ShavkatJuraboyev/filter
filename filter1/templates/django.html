@@ -1,0 +1,193 @@
+<!-- templates/django.html -->
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered Persons</title>
+    
+    <style>
+        /* Jadvalni umumiy xususiyatlar */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        /* Jadval ustunlarini va qatorlarni chiroyli ko'rinish */
+        thead th, tbody td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        /* Tanlangan qatorlarga chiroyli rang berish */
+        .person-row {
+            background-color: #f2f2f2;
+        }
+
+        /* Filtratsiya tugadi */
+        .person-row.hidden {
+            display: none;
+        }
+
+        /* Statusni tanlanganda chiroyli rang */
+        #status-filter,
+        #status_excel,
+        #age-filter,
+        #age_excel {
+            padding: 8px;
+            font-size: 16px;
+            width: 150px; /* Status filtri o'zini belgilang */
+            border: 1px solid #ccc; /* Chegarasi bor */
+        }
+
+        /* Statusni tanlanganda chiroyli rang */
+        #status-filter option,
+        #status_excel option,
+        #age-filter option,
+        #age_excel option {
+            background-color: #f8f8f8;
+            padding: 8px;
+        }
+
+        /* Tanlangan opsiyaga chiroyli rang */
+        #status-filter option:selected,
+        #status_excel option:selected,
+        #age-filter option:selected,
+        #age_excel option:selected {
+            background-color: #ffd699;
+            font-weight: bold;
+        }
+
+        /* Elementlar yonida hover efekti */
+        #status-filter option:hover,
+        #status_excel option:hover,
+        #age-filter option:hover,
+        #age_excel option:hover {
+            background-color: #ffcc80;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Barcha yoshdagi foydalanuvchilarni ko'rsatish
+            $('.person-row').removeClass('hidden');
+
+            // Select elementi o'zgartirilganda filtratsiya qilish
+            $('select').change(function () {
+                filterPersons();
+            });
+
+            // Qidirish inputi o'zgartirilganda filtratsiya qilish
+            $('#search-input').on('input', function () {
+                filterPersons();
+            });
+
+            function filterPersons() {
+                var searchQuery = $('#search-input').val();
+                var statusFilter = $('#status-filter').val();
+                var ageFilter = $('#age-filter').val();
+
+                // Barcha foydalanuvchilarni yashirish
+                $('.person-row').addClass('hidden');
+
+                // Agar status "all" bo'lsa va yosh "all" bo'lmasa
+                if (statusFilter === "all" && ageFilter === "all") {
+                    $('.person-row').each(function () {
+                        var fullName = $(this).data('full-name').toLowerCase();
+
+                        if (fullName.includes(searchQuery.toLowerCase())) {
+                            $(this).removeClass('hidden');
+                        }
+                    });
+                } else {
+                    // Agar status va yosh tanlanmagan bo'lsa
+                    if (statusFilter === "all") {
+                        $('.person-row[data-age="' + ageFilter + '"]').each(function () {
+                            var fullName = $(this).data('full-name').toLowerCase();
+
+                            if (fullName.includes(searchQuery.toLowerCase())) {
+                                $(this).removeClass('hidden');
+                            }
+                        });
+                    }
+                    // Agar status tanlangan bo'lsa va yosh "all" bo'lsa
+                    else if (ageFilter === "all") {
+                        $('.person-row[data-status="' + statusFilter + '"]').each(function () {
+                            var fullName = $(this).data('full-name').toLowerCase();
+
+                            if (fullName.includes(searchQuery.toLowerCase())) {
+                                $(this).removeClass('hidden');
+                            }
+                        });
+                    }
+                    // Agar status va yosh tanlangan bo'lsa
+                    else {
+                        $('.person-row[data-status="' + statusFilter + '"][data-age="' + ageFilter + '"]').each(function () {
+                            var fullName = $(this).data('full-name').toLowerCase();
+
+                            if (fullName.includes(searchQuery.toLowerCase())) {
+                                $(this).removeClass('hidden');
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <h2>Filter by Status</h2>
+    <select id="status-filter">
+        <option value="all">All</option>
+        <option value="yangi">Yangi</option>
+        <option value="tekshirilmoqda">Tekshirilmoqda</option>
+        <option value="tekshirildi">Tekshirildi</option>
+        <option value="rad etildi">Rad etildi</option>
+        <option value="ma'lumot topilmadi">Ma'lumot topilmadi</option>
+    </select>
+
+    <h2>Filter by Age</h2>
+    <select id="age-filter">
+        <option value="all">All</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="18">18</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+    </select>
+
+    <h2>Search</h2>
+    <input type="text" id="search-input">
+    <h2>Export Users</h2>
+    <a href="{% url 'export_word' %}" download>Download Word</a>
+    <a href="{% url 'export_excel' %}" download>Download Excel</a>
+
+    <h2>Filtered Persons</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in all_persons %}
+                <tr class="person-row age-{{ person.age }} hidden" data-status="{{ person.status }}" data-age="{{ person.age }}" data-full-name="{{ person.first_name }} {{ person.last_name }} {{ person.age }} {{ person.email }} {{ person.status }}">
+                    <td>{{ person.first_name }} {{ person.last_name }}</td>
+                    <td>{{ person.age }}</td>
+                    <td>{{ person.email }}</td>
+                    <td>{{ person.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

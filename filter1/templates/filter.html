@@ -1,0 +1,58 @@
+<!-- templates/person_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Person List</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Select elementi o'zgartirilganda filtratsiya qilish
+            $('select').change(function () {
+                var selectedAges = [];
+
+                // Tanlangan yoshlarni olish
+                $('select option:selected').each(function () {
+                    var value = $(this).val();
+                    if (value !== "all") {
+                        selectedAges.push(value);
+                    }
+                });
+
+                // Barcha yoshdagi foydalanuvchilarni yashirish
+                $('.person-age').hide();
+
+                // Agar tanlangan "all" bo'lmasa, tanlangan yoshlarga mos keladigan foydalanuvchilarni ko'rsatish
+                if (selectedAges.length > 0) {
+                    selectedAges.forEach(function (age) {
+                        $('.age-' + age).show();
+                    });
+                } else {
+                    // Aks holda, barcha foydalanuvchilarni ko'rsatish
+                    $('.person-age').show();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<h2>All Persons</h2>
+<ul>
+    {% for person in all_persons %}
+        <li class="person-age age-{{ person.age }}">ism: {{ person }} <br> yosh: {{person.age}} </li>
+    {% endfor %}
+</ul>
+
+<h2>Filter by Age</h2>
+<select multiple>
+    <option value="all">all</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="18">18</option>
+    <option value="20">20</option>
+    <option value="25">25</option>
+</select>
+
+</body>
+</html>

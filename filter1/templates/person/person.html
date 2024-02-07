@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>person</title>
+<style>
+.filter {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.labelfilter {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    
+    
+}
+.divfilter{
+    display: inline-block; 
+}
+.div{
+    width: 18%;
+}
+.div1{
+    width: 5%;
+}
+
+.inputfilter, .selectfilter {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.btnfilter {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btnfilter:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #4caf50;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+</style>
+</head>
+<body>
+    <form class="filter" method="get" action="{% url 'person' %}">
+        <div class="div divfilter">
+            <label class="labelfilter" for="first_name">First Name:</label>
+            <input class="inputfilter" type="text" name="first_name" id="first_name">
+        </div>
+        <div class="div divfilter">
+            <label for="last_name">Last Name:</label>
+            <input class="inputfilter" type="text" name="last_name" id="last_name">
+        </div>
+        <div class="div divfilter">
+            <label for="age">Age:</label>
+            <input class="inputfilter" type="number" name="age" id="age">
+        </div>
+        <div class="div divfilter">
+            <label for="tuman">Tuman:</label>
+            <select class="selectfilter" name="tuman" id="tuman">
+                <option value="" selected>All</option>
+                {% for tuman in tumans %}
+                    <option value="{{ tuman.id }}">{{ tuman.tuman_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div divfilter">
+            <label for="status">Status:</label>
+            <select class="selectfilter" name="status" id="status">
+                <option value="" selected>All</option>
+                {% for choice in status_choices %}
+                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div1 divfilter">
+            <button class="btnfilter" type="submit">Filter</button>
+        </div>
+        
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Tuman</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in persons %}
+                <tr>
+                    <td>{{ person.first_name }} {{ person.last_name }}</td>
+                    <td>{{ person.age }}</td>
+                    <td>{{ person.tuman }}</td>
+                    <td>{{ person.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

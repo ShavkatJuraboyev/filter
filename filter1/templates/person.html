@@ -1,0 +1,170 @@
+<!-- templates/person_list.html -->
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Person List</title>
+    <style>
+        /* static/css/style.css */
+
+/* Jadvalni umumiy xususiyatlar */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Jadval ustunlarini va qatorlarni chiroyli ko'rinish */
+thead th, tbody td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Tanlangan qatorlarga chiroyli rang berish */
+.person-row {
+    background-color: #f2f2f2;
+}
+
+/* Filtratsiya tugadi */
+.person-row.hidden {
+    display: none;
+}
+
+/* Tanlangan yoshlar uchun chiroyli rang */
+.age-15 {
+    background-color: #c1f0c1;
+}
+
+.age-16 {
+    background-color: #a8d8a8;
+}
+
+.age-18 {
+    background-color: #89c989;
+}
+
+.age-20 {
+    background-color: #6fb76f;
+}
+
+.age-25 {
+    background-color: #4c944c;
+}
+
+/* static/css/style.css */
+
+/* Select elementi umumiy xususiyatlar */
+select {
+    padding: 8px;
+    font-size: 16px;
+    height: auto; /* Avtomatik balandlik */
+    width: 200px; /* O'zingiz tanlagan balandlikni belgilang */
+    overflow-y: auto; /* Vertikal skroll qilish uchun */
+    border: 1px solid #ccc; /* Chegarasi bor */
+}
+
+/* Select elementi opsiyalarini chiroyli ko'rinish */
+select option {
+    background-color: #f8f8f8;
+    padding: 8px;
+}
+
+/* Tanlangan opsiyaga chiroyli rang */
+select option:selected {
+    background-color: #b3d9ff;
+    font-weight: bold;
+}
+
+/* Tugadi deb e'tiroz berganda chiroyli rang */
+select option:disabled {
+    color: #999;
+}
+
+/* Elementlar yonida hover efekti */
+select option:hover {
+    background-color: #d9d9d9;
+}
+
+/* Filter tugadi deb e'tiroz berganda chiroyli rang */
+select:disabled {
+    color: #999;
+}
+
+/* Filter tugadi deb e'tiroz berganda chiroyli rang */
+select:disabled option {
+    background-color: #f2f2f2;
+    font-weight: normal;
+}
+
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script>
+        $(document).ready(function () {
+            // Select elementi o'zgartirilganda filtratsiya qilish
+            $('select').change(function () {
+                var selectedAges = [];
+
+                // Tanlangan yoshlarni olish
+                $('select option:selected').each(function () {
+                    var value = $(this).val();
+                    if (value !== "all") {
+                        selectedAges.push(value);
+                    }
+                });
+
+                // Barcha yoshdagi foydalanuvchilarni yashirish
+                $('.person-row').addClass('hidden');
+
+                // Agar tanlangan "all" bo'lmasa, tanlangan yoshlarga mos keladigan foydalanuvchilarni ko'rsatish
+                if (selectedAges.length > 0) {
+                    selectedAges.forEach(function (age) {
+                        $('.age-' + age).removeClass('hidden');
+                    });
+                } else {
+                    // Aks holda, barcha foydalanuvchilarni ko'rsatish
+                    $('.person-row').removeClass('hidden');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<h2>Filter by Age</h2>
+<select>
+    <option value="all">all</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="18">18</option>
+    <option value="20">20</option>
+    <option value="25">25</option>
+</select>
+
+<h2>All Persons</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in all_persons %}
+            <tr class="person-row age-{{ person.age }}">
+                <td>{{ person.first_name }} {{ person.last_name }}</td>
+                <td>{{ person.age }}</td>
+                <td>{{ person.email }}</td>
+                <td>{{ person.status }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

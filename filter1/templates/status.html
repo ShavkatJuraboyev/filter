@@ -1,0 +1,156 @@
+<!-- templates/person_list.html -->
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Person List</title>
+    <style>
+        /* Jadvalni umumiy xususiyatlar */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Jadval ustunlarini va qatorlarni chiroyli ko'rinish */
+thead th, tbody td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Tanlangan qatorlarga chiroyli rang berish */
+.person-row {
+    background-color: #f2f2f2;
+}
+
+/* Filtratsiya tugadi */
+.person-row.hidden {
+    display: none;
+}
+
+/* Statusni tanlanganda chiroyli rang */
+#status-filter {
+    padding: 8px;
+    font-size: 16px;
+    width: 150px; /* Status filtri o'zini belgilang */
+    border: 1px solid #ccc; /* Chegarasi bor */
+}
+
+/* Statusni tanlanganda chiroyli rang */
+#status-filter option {
+    background-color: #f8f8f8;
+    padding: 8px;
+}
+
+/* Tanlangan opsiyaga chiroyli rang */
+#status-filter option:selected {
+    background-color: #ffd699;
+    font-weight: bold;
+}
+
+/* Elementlar yonida hover efekti */
+#status-filter option:hover {
+    background-color: #ffcc80;
+}
+
+
+        /* CSS kodlari ... */
+
+        /* Statusni tanlanganda chiroyli rang */
+        select#status-filter {
+            width: 150px; /* Status filtri o'zini belgilang */
+        }
+
+        /* Statusni tanlanganda chiroyli rang */
+        select#status-filter option:selected {
+            background-color: #ffd699;
+            font-weight: bold;
+        }
+
+        /* Statusni tanlanganda chiroyli rang */
+        select#status-filter option:hover {
+            background-color: #ffcc80;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Filter by Status</h2>
+<select id="status-filter">
+    <option value="all">all</option>
+    <option value="yangi">Yangi</option>
+    <option value="tekshirilmoqda">Tekshirilmoqda</option>
+    <option value="tekshirildi">Tekshirildi</option>
+    <option value="rad etildi">Rad etildi</option>
+    <option value="ma'lumot topilmadi">Ma'lumot topilmadi</option>
+</select>
+
+<h2>All Persons</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in all_persons %}
+            <tr class="person-row age-{{ person.age }} hidden" data-status="{{ person.status }}">
+                <td>{{ person.first_name }} {{ person.last_name }}</td>
+                <td>{{ person.age }}</td>
+                <td>{{ person.email }}</td>
+                <td>{{ person.status }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+    // Barcha yoshdagi foydalanuvchilarni ko'rsatish
+    $('.person-row').removeClass('hidden');
+
+    // Select elementi o'zgartirilganda filtratsiya qilish
+    $('select').change(function () {
+        filterPersons();
+    });
+
+    // Status filtri o'zgartirilganda filtratsiya qilish
+    $('#status-filter').change(function () {
+        filterPersons();
+    });
+
+    function filterPersons() {
+        var selectedAges = [];
+        var selectedStatus = $('#status-filter').val();
+
+        // Tanlangan yoshlarni olish
+        $('select option:selected').each(function () {
+            var value = $(this).val();
+            if (value !== "all") {
+                selectedAges.push(value);
+            }
+        });
+
+        // Barcha yoshdagi foydalanuvchilarni yashirish
+        $('.person-row').addClass('hidden');
+
+        // Agar tanlangan status "all" bo'lmasa, tanlangan statusga mos keladigan foydalanuvchilarni ko'rsatish
+        if (selectedStatus !== "all") {
+                    $('.person-row[data-status="' + selectedStatus + '"]').removeClass('hidden');
+                } else {
+                    // Aks holda, barcha foydalanuvchilarni ko'rsatish
+                    $('.person-row').removeClass('hidden');
+                }
+    }
+});
+
+    </script>
+</body>
+</html>
